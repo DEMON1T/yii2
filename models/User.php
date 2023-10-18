@@ -82,8 +82,8 @@ class User extends ActiveRecord implements IdentityInterface
     }
     public static function getUsersWithSorting(): array
     {
-        $activeUsers = self::find()->where(['status' => 'active'])->all();
-        $inactiveUsers = self::find()->where(['status' => 'inactive'])->all();
+        $activeUsers = self::find()->where(['status' => '0'])->all();
+        $inactiveUsers = self::find()->where(['status' => '1'])->all();
         $users = array_merge($activeUsers, $inactiveUsers);
         return $users;
     }

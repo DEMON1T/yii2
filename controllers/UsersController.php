@@ -11,7 +11,7 @@ class UsersController extends Controller
 {
     public function actionList()
     {
-        $users = User::find()->all();
+        $users = User::find()->orderBy("status")->all();
         return $this->render('list', ['users' => $users]);
     }
     public function actionDeactivate($id)
@@ -34,39 +34,30 @@ class UsersController extends Controller
         return $this->redirect(['list']);
     }
 
-    public function behaviors()
-    {
-        return [
-            'access' => [
-                'class' => \yii\filters\AccessControl::class,
-                'only' => ['list'],
-                'rules' => [
-                    [
-                        'allow' => true,
-                        'roles' => ['@'],
-                        'controllers' => ['users'],
-                    ],
-                ],
-            ],
-        ];
-    }
-    public function actionDeactivate($id)
-    {
-    $user = User::findOne($id);
-    if ($user) {
-        $user->status = 'inactive';
-        $user->save();
-    }
-    return $this->redirect(['user/index']);
-    }
+//    public function behaviors()
+//    {
+//        return [
+//            'access' => [
+//                'class' => \yii\filters\AccessControl::class,
+//                'only' => ['list'],
+//                'rules' => [
+//                    [
+//                        'allow' => true,
+//                        'roles' => ['@'],
+//                        'controllers' => ['users'],
+//                    ],
+//                ],
+//            ],
+//        ];
+//    }
 
     public function actionActivate($id)
     {
         $user = User::findOne($id);
         if ($user) {
-            $user->status = 'active';
+            $user->status = User::STATUS_ACTIVE;
             $user->save();
         }
-        return $this->redirect(['user/index']);
+        return $this->redirect(['users/list']);
     }
 }

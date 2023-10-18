@@ -1,4 +1,5 @@
 <?php use yii\helpers\Html;
+use yii\helpers\Url;
 
 foreach ($users as $user): ?>
     <div>
@@ -14,13 +15,13 @@ foreach ($users as $user): ?>
     </tr>
     <?php foreach ($users as $user): ?>
         <tr>
-            <td><?= $user->name ?></td>
+            <td><?= $user->username ?></td>
             <td><?= $user->status ?></td>
             <td>
                 <?php if ($user->status == 'active'): ?>
-                    <a href="<?= Yii::$app->urlManager->createUrl(['user/deactivate', 'id' => $user->id]) ?>">Деактивировать</a>
+                    <a href="<?= Url::to (['users/deactivate', 'id' => $user->id]) ?>">Деактивировать</a>
                 <?php else: ?>
-                    <a href="<?= Yii::$app->urlManager->createUrl(['user/activate', 'id' => $user->id]) ?>">Активировать</a>
+                    <a href="<?= Url::to (['users/activate', 'id' => $user->id]) ?>">Активировать</a>
                 <?php endif; ?>
             </td>
         </tr>
